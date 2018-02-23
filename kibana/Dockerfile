@@ -1,4 +1,7 @@
-FROM kibana:latest
+FROM kibana:5.6.7
+
+ENV http_proxy="http://192.168.5.8:3128"
+ENV https_proxy="http://192.168.5.8:3128"
 
 RUN apt-get update && apt-get install -y netcat
 

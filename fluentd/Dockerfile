@@ -1,14 +1,21 @@
-FROM fluent/fluentd:latest
+FROM fluent/fluentd:ubuntu-base
+
+ENV http_proxy="http://192.168.5.8:3128"
+ENV https_proxy="http://192.168.5.8:3128"
 
 USER root
 WORKDIR /
-RUN apk add --update netcat-openbsd && rm -rf /var/cache/apk/*
+RUN apt-get update && apt-get install -y netcat
+
 COPY entrypoint.sh /tmp/entrypoint.sh
 RUN chmod +x /tmp/entrypoint.sh
 
-ENV PATH /home/ubuntu/ruby/bin:$PATH
-RUN gem install fluent-plugin-elasticsearch
+RUN ["gem", "install", "fluent-plugin-elasticsearch", "--no-rdoc", "--no-ri"]
+RUN ["gem", "install", "fluent-plugin-grok-parser", "--no-rdoc", "--no-ri"]
+RUN ["gem", "install", "fluent-plugin-forest", "--no-rdoc", "--no-ri"]
+RUN ["gem", "install", "fluent-plugin-retag", "--no-rdoc", "--no-ri"]
+RUN ["gem", "install", "fluent-plugin-glusterfs", "--no-rdoc", "--no-ri"]
 
 ADD fluent.conf /fluentd/etc/fluent.conf
 
-CMD ["sh", "-c", "/tmp/entrypoint.sh"]
+CMD ["/tmp/entrypoint.sh"]

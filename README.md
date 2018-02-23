@@ -1,4 +1,4 @@
-# Docker EFK(Elasticsearch, Fluentd, Kibana)
+# Docker EFK (Elasticsearch, Fluentd, Kibana)
 
 EFK setup with docker, docker-compose.
 
@@ -7,42 +7,29 @@ EFK setup with docker, docker-compose.
 - docker
 - docker-compose
 
-## Usege
+## Usage 
 
-Using docker-machine
-
-```sh
-docker-machine create -d virtualbox dev
-eval "$(docker-machine env dev)"
-```
+- Step 1: Build/rebuild docker images:
 
 ```sh
-docker-compose up
+docker-compose -f efk.yml -f example/httpd.yml -f nginx.yml build
 ```
 
-Use Background
+- Step 2: Run docker-compose:
 
 ```sh
-docker-compose up -d
+# just run EFK stack
+docker-compose -f efk.yml up -d
+
+# run EFK stack with http as datasource
+docker-compose -f efk.yml -f example/httpd.yml up -d
+
+# ommit option `-d` to show docker-compose logs in real-time
 ```
 
-```sh
-docker-compose ps
-    Name                   Command               State                 Ports
--------------------------------------------------------------------------------------------
-elasticsearch   /docker-entrypoint.sh elas ...   Up      0.0.0.0:9200->9200/tcp, 9300/tcp
-fluentd         sh -c /tmp/entrypoint.sh         Up      0.0.0.0:24224->24224/tcp, 5140/tcp
-kibana          /docker-entrypoint.sh /tmp ...   Up      0.0.0.0:5601->5601/tcp
-nginx           sh -c /tmp/entrypoint.sh         Up      443/tcp, 0.0.0.0:80->80/tcp
-node_app        sh -c /tmp/entrypoint.sh         Up      0.0.0.0:8080->8080/tcp
-```
+## Notes
 
-```sh
-# open kibana
-open http://127.0.0.1:5601
-
-# if use docker-machine
-open http://"$(docker-machine ip dev)":5601
-```
-
-If you use docker-toolbox, localhost is docker-machine ip.
+- Services version:
+  - kibana:5.6.7
+  - elasticsearch:5.6.7, JVM: 1.8.0_151
+  - fluentd:ubuntu-base (fluentd 1.1.0)

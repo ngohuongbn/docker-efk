@@ -1,6 +1,9 @@
 FROM node:latest
 EXPOSE 8080
 
+ENV http_proxy="http://192.168.5.8:3128"
+ENV https_proxy="http://192.168.5.8:3128"
+
 RUN apt-get update -y && apt-get install -y netcat
 
 COPY entrypoint.sh /tmp/entrypoint.sh

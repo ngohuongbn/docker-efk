@@ -1,0 +1,35 @@
+version: '2'
+services:
+  nginx:
+    container_name: nginx
+    build: nginx/
+    depends_on:
+      - node_app
+      - fluentd
+    ports:
+      - '80:80'
+    logging:
+      driver: 'fluentd'
+      options:
+        fluentd-address: localhost:24224
+        tag: docker.{{.FullID}}
+    environment:
+      - http_proxy=
+      - https_proxy=
+    network_mode: 'host'
+  node_app:
+    container_name: node_app
+    build: node_app/
+    depends_on:
+      - fluentd
+    ports:
+      - '8080:8080'
+    logging:
+      driver: 'fluentd'
+      options:
+        fluentd-address: localhost:24224
+        tag: docker.{{.FullID}}
+    environment:
+      - http_proxy=
+      - https_proxy=
+    network_mode: 'host'
