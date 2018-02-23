@@ -1,8 +1,5 @@
 FROM nginx
 
-ENV http_proxy="http://192.168.5.8:3128"
-ENV https_proxy="http://192.168.5.8:3128"
-
 ADD default.conf /etc/nginx/conf.d/default.conf
 
 RUN mkdir -p /var/www/html
