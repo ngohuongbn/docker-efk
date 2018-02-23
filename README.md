@@ -33,3 +33,11 @@ docker-compose -f efk.yml -f example/httpd.yml up -d
   - kibana:5.6.7
   - elasticsearch:5.6.7, JVM: 1.8.0_151
   - fluentd:ubuntu-base (fluentd 1.1.0)
+
+- Install Fluentd collector for target servers:
+
+```sh
+export td_agent_version=3 #2
+chmod +x fluentd_collector.sh
+bash fluentd_collector.sh ${td_agent_version}
+```
