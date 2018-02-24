@@ -9,13 +9,20 @@ EFK setup with docker, docker-compose.
 
 ## Usage 
 
-- Step 1: Build/rebuild docker images:
+- Step 1: Update elasticsearch ip and fluentd aggregator ip to /etc/hosts:
+
+```sh
+echo "<elastic_search_ip>     elasticsearch" >> /etc/hosts
+echo "<fluentd_ip>     fluentd" >> /etc/hosts
+```
+
+- Step 2: Build/rebuild docker images:
 
 ```sh
 docker-compose -f efk.yml -f example/httpd.yml -f nginx.yml build
 ```
 
-- Step 2: Run docker-compose:
+- Step 3: Run docker-compose:
 
 ```sh
 # just run EFK stack
