@@ -11,11 +11,12 @@ services:
     logging:
       driver: 'fluentd'
       options:
-        fluentd-address: localhost:24224
+        fluentd-address: fluentd:24224
         tag: docker.{{.FullID}}
     environment:
       - http_proxy=
       - https_proxy=
+      - FLUENTD_HOST=fluentd
     network_mode: 'host'
   node_app:
     container_name: node_app
@@ -27,9 +28,10 @@ services:
     logging:
       driver: 'fluentd'
       options:
-        fluentd-address: localhost:24224
+        fluentd-address: fluentd:24224
         tag: docker.{{.FullID}}
     environment:
       - http_proxy=
       - https_proxy=
+      - FLUENTD_HOST=fluentd
     network_mode: 'host'

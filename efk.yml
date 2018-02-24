@@ -14,14 +14,13 @@ services:
     container_name: kibana
     build: kibana/
     volumes:
-      - ./kibana/config/kibana.yml:/opt/kibana/config/kibana.yml
-      - ./kibana/config/kibana.yml:/etc/kibana/kibana.yml
       - /etc/localtime:/etc/localtime
     ports:
       - '5601:5601'
     environment:
       - http_proxy=
       - https_proxy=
+      - ELS_HOST=elasticsearch
     network_mode: 'host'
   fluentd:
     container_name: fluentd
@@ -34,4 +33,5 @@ services:
     environment:
       - http_proxy=
       - https_proxy=
+      - ELS_HOST=elasticsearch
     network_mode: 'host'
