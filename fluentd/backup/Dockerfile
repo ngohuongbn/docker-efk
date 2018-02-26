@@ -17,6 +17,5 @@ RUN ["gem", "install", "fluent-plugin-retag", "--no-rdoc", "--no-ri"]
 RUN ["gem", "install", "fluent-plugin-glusterfs", "--no-rdoc", "--no-ri"]
 
 ADD fluent.conf /fluentd/etc/fluent.conf
-RUN mkdir -p /fluentd/etc/conf/
 
 CMD ["/tmp/entrypoint.sh"]
