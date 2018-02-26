@@ -10,11 +10,11 @@
         pattern %{NOVACPU} 
       </grok>
       #grok_pattern %{NOVACPU}
-      custom_pattern_path /etc/td-agent/conf/pattern
+      custom_pattern_path /fluentd/etc/conf/pattern
     </parse>
 #    format grok
 #    grok_pattern %{NOVACPU}
-#    custom_pattern_path /etc/td-agent/conf/pattern
+#    custom_pattern_path /fluentd/etc/conf/pattern
     tag nova.compute
 </source>
 
