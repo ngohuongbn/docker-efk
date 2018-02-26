@@ -1,0 +1,16 @@
+version: '2'
+services:
+  fluentd:
+    container_name: fluentd
+    build: fluentd/
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./fluentd/agent_compute.conf:/fluentd/etc/fluent.conf
+      - ./fluentd/conf/compute/:/fluentd/etc/conf/
+    ports:
+      - '24224:24224'
+      - '24224:24224/udp'
+    environment:
+      - ELS_HOST=elasticsearch
+    network_mode: 'host'
