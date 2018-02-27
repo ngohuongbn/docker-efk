@@ -7,7 +7,7 @@
     <parse> 
         @type grok
 	grok_pattern %{KEYSTONEACCESS}
-        custom_pattern_path /fluentd/etc/conf/pattern
+        custom_pattern_path /etc/td-agent/conf/pattern
     </parse>
     tag keystone.access
 </source>
