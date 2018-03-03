@@ -26,3 +26,12 @@ Contributing
 ------------
 
 Please help me :)
+
+Nginx notes
+------------
+
+```sh
+ES_PASS=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)
+mkdir /etc/nginx/passwords
+htpasswd -c /etc/nginx/passwords/.espasswd cloud-admin # paste generated ES_PASS
+```
