@@ -1,48 +1,28 @@
-# Docker EFK(Elasticsearch, Fluentd, Kibana)
+docker-compose-efk
+------------------
 
-EFK setup with docker, docker-compose.
+This project handle a orchestration of a `log` centralization using [Elaticsearch](https://www.elastic.co/) to persist data, [Fluentd](https://www.fluentd.org/) as data collection and [Kibana](https://www.elastic.co/products/kibana) to interact with the logs and [Nginx](https://nginx.org/) to be the reverse proxy.
 
-## Requirements
+By default, Kibana does not perform an authentication. To deal with this limitation we put a reverse proxy using nginx with `auth_basic_user_file` option to handle the authentication. The file `nginx/passwords/.httpasswd` contains the default login and password (admin/admin). If you want to change this, you can access [this](http://aspirine.org/htpasswd_en.html) website whom allows you to generate your own login and password. Feel free to handle your logs.
 
-- docker
-- docker-compose
+Usage
+-----
 
-## Usege
+You just have to run `docker-compose up -d` to orchestrate the project. Nginx is using the port `5601` of host to receive connections. Feel free to change this if you want to (line `6` of `docker-compose.yaml`).
 
-Using docker-machine
+What can I do with this?
+------------------------
 
-```sh
-docker-machine create -d virtualbox dev
-eval "$(docker-machine env dev)"
-```
+Everything you want. :) 
 
-```sh
-docker-compose up
-```
+But log output of docker containers, log php requests, log {anything goes here}. In [this](https://www.fluentd.org/datasources) link you can find all datasources plugins to `fluentd`.
 
-Use Background
+But you did not talk about {anything goes here}
+-----------------------------------------------
 
-```sh
-docker-compose up -d
-```
+Fell free to ask me anything [here](https://github.com/pedromazala/docker-compose-efk/issues)
 
-```sh
-docker-compose ps
-    Name                   Command               State                 Ports
--------------------------------------------------------------------------------------------
-elasticsearch   /docker-entrypoint.sh elas ...   Up      0.0.0.0:9200->9200/tcp, 9300/tcp
-fluentd         sh -c /tmp/entrypoint.sh         Up      0.0.0.0:24224->24224/tcp, 5140/tcp
-kibana          /docker-entrypoint.sh /tmp ...   Up      0.0.0.0:5601->5601/tcp
-nginx           sh -c /tmp/entrypoint.sh         Up      443/tcp, 0.0.0.0:80->80/tcp
-node_app        sh -c /tmp/entrypoint.sh         Up      0.0.0.0:8080->8080/tcp
-```
+Contributing
+------------
 
-```sh
-# open kibana
-open http://127.0.0.1:5601
-
-# if use docker-machine
-open http://"$(docker-machine ip dev)":5601
-```
-
-If you use docker-toolbox, localhost is docker-machine ip.
+Please help me :)
